@@ -11,7 +11,13 @@
     font-weight: 500;
   }
 
+  &--blue {
+    color: $mainColor;
+  }
+
   &__icon {
+    position: relative;
+    top: 8px;
     width: 60px;
     height: 60px;
     margin-right: .5rem;

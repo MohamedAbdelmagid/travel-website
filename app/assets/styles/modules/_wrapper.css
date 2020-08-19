@@ -10,6 +10,16 @@
     max-width: 980px;
   }
 
+  &--no-padding-until-largeEnough {
+    padding-left: 0;
+    padding-right: 0;
+
+    @mixin atLargeEnough {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+  }
+
   .wrapper {
     padding-left: 0;
     padding-right: 0;
