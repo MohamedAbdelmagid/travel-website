@@ -3,20 +3,28 @@
   padding: 10px 0;
   width: 100%;
   z-index: 2;
+  transition: background-color .3s ease-out;
+
+  &--is-expanded {
+    background-color: rgba($mainColor, .55);
+  }
   
   @mixin atMedium {
     background-color: rgba($mainColor, .3);
   }
 
   &__button-container {
-    float: right;
+    @mixin atMedium {
+      float: right;
+    }
   }
   
   &__logo {
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) scale(.8);
+    transform-origin: 50% 0;
     background-color: $mainColor;
     padding: 13px 29px;
 
@@ -25,6 +33,10 @@
       transform: translateX(0);
       padding: 25px 36px;
     }
+  }
+
+  &__logo__graphic {
+    text-indent: -9999px;
   }
 
   &__menu-icon {
@@ -42,9 +54,13 @@
 
   &__menu-content {
     display: none;
+    padding-top: 90px;
+    text-align: center;
 
     @mixin atMedium {
       display: block;
+      padding-top: 0;
+      transform: scale(1);
     }
 
     &--is-visible {
