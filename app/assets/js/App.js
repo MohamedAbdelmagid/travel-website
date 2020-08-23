@@ -7,5 +7,6 @@ if (module.hot) {
   module.hot.accept()
 }
 
-new DisplayOnScrolling()
+new DisplayOnScrolling(document.querySelectorAll(".feature-item"), 75)
+new DisplayOnScrolling(document.querySelectorAll(".testimonial"), 60)
 new MobileMenu()
