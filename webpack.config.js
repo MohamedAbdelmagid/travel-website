@@ -3,6 +3,7 @@ const path = require("path")
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const fse = require('fs-extra')
 
 const postCSSPlugins = [
   require('postcss-import'),
@@ -12,6 +13,14 @@ const postCSSPlugins = [
   require('postcss-hexrgba'),
   require('autoprefixer')
 ]
+
+class RunAfterCompile {
+  apply(compiler) {
+    compiler.hooks.done.tap('Copy images', function () {
+      fse.copySync('./app/assets/images', './dist/assets/images')
+    })
+  }
+}
 
 let cssConfig = {
   test: /\.css$/i,
@@ -67,7 +76,8 @@ if (currentProcess == 'build') {
   }
   config.plugins.push(
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({filename: 'styles.[chunkhash].css'})
+    new MiniCssExtractPlugin({filename: 'styles.[chunkhash].css'}),
+    new RunAfterCompile()
   )
 }
 
