@@ -3,15 +3,10 @@ class Modal {
     this.injectHTML()
     this.modal = document.querySelector(".modal")
     this.closeIcon = document.querySelector(".modal__close")
-    this.openModalButtons = document.querySelectorAll(".open-modal")
     this.events()
   }
 
   events() {
-    // Open modal
-    this.openModalButtons.forEach(
-      button => button.addEventListener("click", event => this.openModal(event))
-    )
     // Close modal
     this.closeIcon.addEventListener("click", () => this.closeModal())
 
@@ -19,8 +14,7 @@ class Modal {
     document.addEventListener("keyup", event => this.closeModalIfEscKey(event))
   }
 
-  openModal(event) {
-    event.preventDefault();
+  openModal() {
     this.modal.classList.add("modal--is-visible")
   }
 
