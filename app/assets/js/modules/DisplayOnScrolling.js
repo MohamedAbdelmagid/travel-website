@@ -25,7 +25,6 @@ class DisplayOnScrolling {
     if (window.scrollY + window.innerHeight > item.offsetTop) {
       let apperancePercent = (item.getBoundingClientRect().top / window.innerHeight) * 100
       if (apperancePercent < this.thresholdPercent) {
-        console.log("Item was displayed!!");
         item.classList.add("display-item--visible")
         item.isRevealed = true
         if (item.isLastItem) {

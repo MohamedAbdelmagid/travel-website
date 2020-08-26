@@ -25,7 +25,7 @@ document.querySelectorAll(".open-modal").forEach(
           modal = new Modal.default()
           setTimeout(() => () => modal.openModal(), 20)
         })
-        .catch(() => console.log("There was a problem"))
+        .catch(() => console.error("Error loading Modal.js file"))
     } else {
       modal.openModal()
     }
