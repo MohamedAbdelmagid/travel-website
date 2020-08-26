@@ -2,6 +2,7 @@ const currentProcess = process.env.npm_lifecycle_event
 const path = require("path")
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const postCSSPlugins = [
   require('postcss-import'),
@@ -27,6 +28,9 @@ let cssConfig = {
 
 let config = {
   entry: "./app/assets/js/App.js",
+  plugins: [
+    new HtmlWebpackPlugin({filename: 'index.html', template: './app/index.html'})
+  ],
   module: {
     rules: [
       cssConfig
@@ -61,10 +65,10 @@ if (currentProcess == 'build') {
   config.optimization = {
     splitChunks: {chunks: 'all'}
   }
-  config.plugins = [
+  config.plugins.push(
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({filename: 'styles.[chunkhash].css'})
-  ]
+  )
 }
 
 
