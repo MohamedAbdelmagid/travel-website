@@ -1,5 +1,7 @@
 const currentProcess = process.env.npm_lifecycle_event
 const path = require("path")
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const postCSSPlugins = [
   require('postcss-import'),
@@ -10,28 +12,30 @@ const postCSSPlugins = [
   require('autoprefixer')
 ]
 
+let cssConfig = {
+  test: /\.css$/i,
+  use: [
+    "css-loader?url=false",
+    {
+      loader: "postcss-loader",
+      options: {
+        plugins: postCSSPlugins,
+      },
+    },
+  ],
+}
+
 let config = {
   entry: "./app/assets/js/App.js",
   module: {
     rules: [
-      {
-        test: /\.css$/i,
-        use: [
-          "style-loader",
-          "css-loader?url=false",
-          {
-            loader: "postcss-loader",
-            options: {
-              plugins: postCSSPlugins,
-            },
-          },
-        ],
-      },
+      cssConfig
     ],
   }
 }
 
 if (currentProcess == 'dev') {
+  cssConfig.use.unshift('style-loader')
   config.output = {
     filename: "main.js",
     path: path.resolve(__dirname, "app"),
@@ -46,11 +50,21 @@ if (currentProcess == 'dev') {
 }
 
 if (currentProcess == 'build') {
+  cssConfig.use.unshift(MiniCssExtractPlugin.loader)
+  postCSSPlugins.push(require('cssnano'))
   config.output =  {
-    filename: "main.js",
+    filename: "[name].[chunkhash].js",
+    chunkFilename: "[name].[chunkhash].js",
     path: path.resolve(__dirname, "dist"),
   }
   config.mode = 'production'
+  config.optimization = {
+    splitChunks: {chunks: 'all'}
+  }
+  config.plugins = [
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({filename: 'styles.[chunkhash].css'})
+  ]
 }
 
 
