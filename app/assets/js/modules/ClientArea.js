@@ -25,7 +25,7 @@ class ClientArea {
         this.contentArea.innerHTML = response.data
       })
       .catch((response) => {
-        this.contentArea.innerHTML = response.data
+        this.contentArea.innerHTML = "<p style='color: red'>Wrong password!!</p>"
         this.field.value = ''
         this.field.focus()
       })

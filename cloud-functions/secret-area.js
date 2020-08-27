@@ -1,4 +1,17 @@
 exports.handler = function(event, context, callback) {
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-type"
+  }
+
+  if (event.httpMethod !== "POST") {
+    return callback(null, {
+      statusCode: 200,
+      headers,
+      body: "Only post request allowed!!"
+    })
+  }
+
   const content = `
   <h3>This is the secret area!</h3>
   <p>Be bold and don't give up <strong>Thanks god</strong>
@@ -14,13 +27,14 @@ exports.handler = function(event, context, callback) {
   if (body.password == "password") {
     callback(null, {
       statusCode: 200,
+      headers,
       body: content
     })
     
   } else {
     callback(null, {
       statusCode: 401,
-      body: "<h2 style='color: red'>Wrong password!!</h2>"
+      headers
     })
   }
 }
